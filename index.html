@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerBlend Pro 3-in-1 | Blend With or Without Light</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #242424;
+    --border: #2A2A2A;
+    --muted: #6B6B6B;
+    --text: #E8E8E8;
+    --white: #FFFFFF;
+    --gold: #C9A84C;
+    --gold-light: #F0C96B;
+    --gold-dim: #7A5C1E;
+    --red: #C0392B;
+    --green: #27AE60;
+    --green-dark: #1E8449;
+    --radius: 4px;
+    --radius-lg: 10px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+
+  a { text-decoration: none; color: inherit; }
+
+  img { display: block; max-width: 100%; }
+
+  /* ── UTILITIES ── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  .gold { color: var(--gold); }
+  .white { color: var(--white); }
+  .strike { text-decoration: line-through; color: var(--muted); }
+  .small { font-size: 0.82rem; }
+  .center { text-align: center; }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    background: rgba(201,168,76,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+
+  /* ── HEADER ── */
+  #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: rgba(10,10,10,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--gold); }
+  .header-trust {
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: none;
+  }
+  @media(min-width:640px){ .header-trust { display: block; } }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-lg { padding: 16px 32px; font-size: 1rem; border-radius: var(--radius-lg); }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── ANNOUNCEMENT BAR ── */
+  .announce-bar {
+    background: var(--gold);
+    color: var(--black);
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 9px 20px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 70px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .hero-tag { margin-bottom: 22px; }
+  .hero-headline {
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    max-width: 780px;
+  }
+  .hero-headline .accent {
+    color: var(--gold);
+    position: relative;
+  }
+  .hero-sub {
+    font-size: 1.08rem;
+    color: #AAAAAA;
+    max-width: 600px;
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+  .hero-guarantee {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-guarantee .icon { color: var(--green); font-size: 1rem; }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 540px;
+  }
+  .hero-stat {
+    background: var(--dark2);
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat .lbl { font-size: 0.75rem; color: var(--muted); }
+
+  /* ── PAIN SECTION ── */
+  #pain {
+    background: var(--dark2);
+    padding: 72px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .section-headline {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+    max-width: 620px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: #999;
+    max-width: 560px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media(min-width:640px){ .pain-grid { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:900px){ .pain-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .pain-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pain-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+  .pain-icon { font-size: 1.6rem; margin-bottom: 14px; }
+  .pain-card h4 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--white); margin-bottom: 8px; }
+  .pain-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── BENEFITS ── */
+  #benefits { padding: 80px 0; }
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  @media(min-width:640px){ .benefit-grid { grid-template-columns: 1fr 1fr; } }
+  .benefit-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: border-color 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .benefit-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.04), transparent);
+    pointer-events: none;
+  }
+  .benefit-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+  .benefit-card.featured {
+    border-color: var(--gold-dim);
+    background: linear-gradient(135deg, var(--dark2), #1C1600);
+  }
+  .benefit-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold-dim);
+    border-radius: 100px;
+    padding: 3px 10px;
+    margin-bottom: 14px;
+  }
+  .benefit-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+  .benefit-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--white); margin-bottom: 10px; }
+  .benefit-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── SPECS ── */
+  #specs {
+    background: var(--dark2);
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  @media(min-width:768px){ .specs-grid { grid-template-columns: 1fr 1fr; } }
+  .spec-table { width: 100%; border-collapse: collapse; }
+  .spec-table caption {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: left;
+    padding-bottom: 14px;
+  }
+  .spec-table tr { border-bottom: 1px solid var(--border); }
+  .spec-table tr:last-child { border-bottom: none; }
+  .spec-table td {
+    padding: 13px 0;
+    font-size: 0.9rem;
+    vertical-align: top;
+  }
+  .spec-table td:first-child { color: var(--muted); width: 52%; }
+  .spec-table td:last-child { color: var(--white); font-weight: 500; }
+
+  /* ── SOCIAL PROOF ── */
+  #proof { padding: 80px 0; }
+  .proof-aggregate {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 32px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 40px;
+  }
+  .proof-score { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .stars { color: var(--gold); font-size: 1.2rem; margin-bottom: 4px; }
+  .proof-count { font-size: 0.85rem; color: var(--muted); }
+  .proof-bars { flex: 1; min-width: 200px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; font-size: 0.78rem; }
+  .bar-label { width: 30px; color: var(--muted); text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 6px; background: var(--dark3); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--gold); border-radius: 3px; }
+  .bar-count { width: 24px; color: var(--muted); flex-shrink: 0; }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media(min-width:640px){ .reviews-grid { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:900px){ .reviews-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .review-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+  }
+  .review-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+  .reviewer-info { display: flex; align-items: center; gap: 12px; }
+  .reviewer-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .reviewer-name { font-weight: 600; font-size: 0.9rem; color: var(--white); }
+  .reviewer-location { font-size: 0.75rem; color: var(--muted); }
+  .review-stars { color: var(--gold); font-size: 0.85rem; }
+  .verified-badge { font-size: 0.7rem; color: var(--green); font-weight: 600; }
+  .review-text { font-size: 0.88rem; color: #AAAAAA; line-height: 1.65; }
+  .review-date { font-size: 0.72rem; color: var(--muted); margin-top: 10px; }
+
+  /* ── COUNTDOWN ── */
+  #urgency {
+    background: linear-gradient(135deg, #0F0900, #1A1000);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    margin: 0 0 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #urgency::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(201,168,76,0.02) 20px,
+      rgba(201,168,76,0.02) 21px
+    );
+    pointer-events: none;
+  }
+  .urgency-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .urgency-headline { font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 20px; }
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .cd-block {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    min-width: 64px;
+    padding: 12px 16px;
+    text-align: center;
+  }
+  .cd-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .cd-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 4px; }
+  .urgency-note { font-size: 0.82rem; color: var(--muted); }
+  .urgency-stock { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--red); }
+  .stock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+  /* ── PRICING ── */
+  #pricing { padding: 80px 0; }
+  .pricing-card {
+    background: var(--dark2);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .pricing-header {
+    background: linear-gradient(135deg, #1A1000, #0F0800);
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--gold-dim);
+  }
+  .pricing-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .price-display { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .price-new { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--white); }
+  .price-old { font-size: 1.3rem; text-decoration: line-through; color: var(--muted); }
+  .price-save {
+    background: var(--red);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .pricing-body { padding: 28px 32px; }
+  .included-list { list-style: none; margin-bottom: 24px; }
+  .included-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .included-list li:last-child { border-bottom: none; }
+  .included-list li .check { color: var(--green); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .payment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(39,174,96,0.1);
+    border: 1px solid rgba(39,174,96,0.25);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--green);
+    margin-bottom: 20px;
+  }
+
+  /* ── ORDER FORM ── */
+  #order { padding: 80px 0; background: var(--dark2); border-top: 1px solid var(--border); }
+  .order-wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .form-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+  }
+  @media(max-width:500px){ .form-card { padding: 28px 20px; } }
+  .form-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 6px; }
+  .form-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #CCCCCC;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .form-label span { color: var(--gold); }
+  .form-control {
+    width: 100%;
+    padding: 13px 16px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .form-control:focus {
+    border-color: var(--gold-dim);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+  }
+  .form-control.error { border-color: var(--red); }
+  .form-control option { background: var(--dark2); }
+  .error-msg { display: none; font-size: 0.78rem; color: var(--red); margin-top: 5px; }
+  .error-msg.visible { display: block; }
+  .qty-selector {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: fit-content;
+  }
+  .qty-btn {
+    width: 42px; height: 46px;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .qty-btn:first-child { border-radius: var(--radius) 0 0 var(--radius); border-right: none; }
+  .qty-btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; border-left: none; }
+  .qty-btn:hover { background: var(--dark3); }
+  .qty-display {
+    width: 58px; height: 46px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .order-total {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .order-total-label { font-size: 0.85rem; color: var(--muted); }
+  .order-total-value { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+  .submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .submit-btn:active { transform: translateY(0); }
+  .form-footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+  .trust-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.75rem; color: var(--muted); font-weight: 500;
+  }
+  .trust-item .icon { font-size: 0.95rem; }
+
+  /* ── SUCCESS MESSAGE ── */
+  .success-overlay {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .success-icon { font-size: 3rem; margin-bottom: 16px; }
+  .success-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 10px; }
+  .success-text { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── WHATSAPP ── */
+  .wa-float {
+    position: fixed;
+    bottom: 28px;
+    right: 24px;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .wa-bubble {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+    animation: fadeInUp 0.4s ease 1s both;
+    max-width: 200px;
+    text-align: right;
+  }
+  .wa-btn {
+    width: 56px; height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeInUp 0.4s ease 0.8s both;
+  }
+  .wa-btn:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,0.45); }
+  .wa-icon { font-size: 1.5rem; }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── FOOTER ── */
+  #footer {
+    background: var(--dark2);
+    border-top: 1px solid var(--border);
+    padding: 48px 0 28px;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  @media(min-width:640px){ .footer-inner { grid-template-columns: 1.5fr 1fr 1fr; } }
+  .footer-brand p { font-size: 0.85rem; color: var(--muted); margin-top: 10px; line-height: 1.65; max-width: 280px; }
+  .footer-col h5 { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { font-size: 0.85rem; color: var(--muted); padding: 4px 0; }
+  .footer-divider { height: 1px; background: var(--border); margin-bottom: 22px; }
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .footer-trust-row {
+    display: flex; flex-wrap: wrap; gap: 20px; align-items: center;
+  }
+  .footer-trust-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); }
+
+  /* ── DIVIDER ── */
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+  /* ── MISC ── */
+  .mt-48 { margin-top: 48px; }
+  .mb-8 { margin-bottom: 8px; }
+  .mb-16 { margin-bottom: 16px; }
+  .mb-40 { margin-bottom: 40px; }
+
+  /* Scroll fade in */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  🔥 Free Nationwide Delivery · Pay On Delivery Available · Limited Units Left
+</div>
+
+<!-- STICKY HEADER -->
+<header id="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">PowerBlend<span>Pro</span></div>
+      <div class="header-trust">Trusted by 3,200+ Nigerian Households</div>
+      <a href="#order" class="btn-primary">Order Now →</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-tag">
+      <span class="tag">✦ Nigeria's #1 Power-Independent Blender</span>
+    </div>
+    <h1 class="hero-headline">
+      Stop Letting <span class="accent">NEPA</span> Decide<br>When You Can Blend
+    </h1>
+    <p class="hero-sub">
+      The PowerBlend Pro 3-in-1 runs on battery, charges via USB, and plugs into direct power — so your kitchen never stops, no matter what happens to the grid.
+    </p>
+    <div class="hero-ctas">
+      <a href="#order" class="btn-primary btn-lg">🛒 Place Your Order — Pay On Delivery</a>
+      <a href="#benefits" class="btn-outline">See What's Inside</a>
+    </div>
+    <div class="hero-guarantee">
+      <span class="icon">✓</span> No payment upfront — you pay when it arrives at your door
+    </div>
+    <div class="hero-stats mt-48">
+      <div class="hero-stat"><div class="num">3,200+</div><div class="lbl">Units Sold</div></div>
+      <div class="hero-stat"><div class="num">4.9★</div><div class="lbl">Avg Rating</div></div>
+      <div class="hero-stat"><div class="num">3-in-1</div><div class="lbl">Power Modes</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN SECTION -->
+<section id="pain">
+  <div class="container">
+    <p class="section-label">The Real Problem</p>
+    <h2 class="section-headline">NEPA Has Stolen Enough of Your Kitchen Time</h2>
+    <p class="section-sub">
+      Every Nigerian knows the frustration. You're in the middle of cooking — tomatoes waiting, ingredients ready — and the light goes. Again. Your regular blender is useless. Sound familiar?
+    </p>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-icon">⚡</div>
+        <h4>"Light don go again"</h4>
+        <p>Right when you need to blend, NEPA takes the power and you're left stranded with unfinished cooking.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon">🔋</div>
+        <h4>Generator fuel costs rising</h4>
+        <p>Running your generator just to blend tomatoes? That's ₦2,000 in fuel for a 5-minute task. Madness.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon">⏳</div>
+        <h4>Waiting hours for power return</h4>
+        <p>Your ingredients spoil. Your family waits. Your plans shift — all because one appliance needs constant electricity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="container">
+    <p class="section-label">Why PowerBlend Pro Changes Everything</p>
+    <h2 class="section-headline">Built For the Nigerian Reality — Not a Fantasy Grid</h2>
+    <p class="section-sub">We didn't just put a battery in a blender. We engineered a complete kitchen power solution from the ground up.</p>
+    <div class="benefit-grid">
+      <div class="benefit-card featured reveal">
+        <div class="benefit-badge">⭐ Most Loved Feature</div>
+        <div class="benefit-icon">🔋</div>
+        <h3>Triple Power System — Battery, USB & Direct</h3>
+        <p>When light goes, the battery kicks in automatically. When battery is low, charge via USB power bank. When NEPA returns, plug in directly. You are always in control — always blending.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">⚡</div>
+        <h3>Powerful 1200W Motor That Doesn't Slow Down</h3>
+        <p>Blends tomatoes, peppers, ogiri, and frozen ingredients in under 90 seconds. Professional-grade stainless steel blades that stay sharp after years of daily use.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🧼</div>
+        <h3>Self-Cleaning in 30 Seconds</h3>
+        <p>Add water and a drop of soap, run for 30 seconds — spotless. No tedious scrubbing of blades. Dishwasher-safe removable parts.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🔇</div>
+        <h3>Near-Silent Operation — Even at Night</h3>
+        <p>Sound-dampening insulated motor housing means you can blend at 6am without waking the household. 68dB max noise level — quieter than a conversation.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🛡️</div>
+        <h3>Overload & Overheat Protection Built-In</h3>
+        <p>Intelligent sensors shut the motor down safely if it's overworked — protecting both the machine and your investment. It simply won't burn out.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">📦</div>
+        <h3>2-Litre + 1.5-Litre Dual Jar Set</h3>
+        <p>Large family-sized jar and a personal smoothie jar included. One blender handles cooking quantities and personal portions — replace two appliances with one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SPECS -->
+<section id="specs">
+  <div class="container">
+    <p class="section-label">Technical Specifications</p>
+    <h2 class="section-headline">Engineered to Perform</h2>
+    <div class="specs-grid reveal">
+      <table class="spec-table">
+        <caption>Performance & Power</caption>
+        <tbody>
+          <tr><td>Motor Power</td><td>1200W Peak</td></tr>
+          <tr><td>Speed Settings</td><td>6 Variable Speeds + Pulse</td></tr>
+          <tr><td>Blade Material</td><td>6-Point Hardened Stainless Steel</td></tr>
+          <tr><td>Blade Speed</td><td>Up to 28,000 RPM</td></tr>
+          <tr><td>Battery Capacity</td><td>8,000mAh Lithium-ion</td></tr>
+          <tr><td>Battery Run Time</td><td>Up to 45 minutes continuous</td></tr>
+          <tr><td>Charging Time</td><td>2.5 hours (full charge)</td></tr>
+        </tbody>
+      </table>
+      <table class="spec-table">
+        <caption>Build & Dimensions</caption>
+        <tbody>
+          <tr><td>Main Jar Capacity</td><td>2.0 Litres (BPA-Free)</td></tr>
+          <tr><td>Personal Jar Capacity</td><td>1.5 Litres (BPA-Free)</td></tr>
+          <tr><td>Input Voltage</td><td>100–240V (Universal)</td></tr>
+          <tr><td>USB Charging</td><td>USB-C, 5V/3A Compatible</td></tr>
+          <tr><td>Noise Level</td><td>≤68 dB</td></tr>
+          <tr><td>Weight</td><td>2.4 kg (Base Unit)</td></tr>
+          <tr><td>Warranty</td><td>12 Months Full Cover</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section id="proof">
+  <div class="container">
+    <p class="section-label">Customer Reviews</p>
+    <h2 class="section-headline mb-40">3,200+ Nigerians Can't Be Wrong</h2>
+
+    <div class="proof-aggregate reveal">
+      <div>
+        <div class="proof-score">4.9</div>
+        <div class="stars">★★★★★</div>
+        <div class="proof-count">From 3,214 verified buyers</div>
+      </div>
+      <div class="proof-bars">
+        <div class="bar-row"><span class="bar-label">5★</span><div class="bar-track"><div class="bar-fill" style="width:89%"></div></div><span class="bar-count">2858</span></div>
+        <div class="bar-row"><span class="bar-label">4★</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-count">257</span></div>
+        <div class="bar-row"><span class="bar-label">3★</span><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-count">64</span></div>
+        <div class="bar-row"><span class="bar-label">2★</span><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><span class="bar-count">22</span></div>
+        <div class="bar-row"><span class="bar-label">1★</span><div class="bar-track"><div class="bar-fill" style="width:0.4%"></div></div><span class="bar-count">13</span></div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">AM</div>
+            <div>
+              <div class="reviewer-name">Adaeze M.</div>
+              <div class="reviewer-location">Lagos Island, Lagos</div>
+            </div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="verified-badge mb-8">✓ Verified Purchase</div>
+        <p class="review-text">"I can't explain how this blender has changed my mornings. NEPA has been collecting our light almost every day but I still blend my tomatoes, smoothies, everything. No generator needed. Honestly the best kitchen purchase I've ever made."</p>
+        <div class="review-date">February 2025 · Bought 2 units</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">OK</div>
+            <div>
+              <div class="reviewer-name">Olumide K.</div>
+              <div class="reviewer-location">Ibadan, Oyo State</div>
+            </div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="verified-badge mb-8">✓ Verified Purchase</div>
+        <p class="review-text">"I was skeptical o. I thought the battery would be weak after one month. I've been using this for 6 months now and the battery is still holding strong. The motor is powerful — blends frozen things like it's nothing. Worth every kobo."</p>
+        <div class="review-date">January 2025</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">CI</div>
+            <div>
+              <div class="reviewer-name">Chioma I.</div>
+              <div class="reviewer-location">Enugu, Enugu State</div>
+            </div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="verified-badge mb-8">✓ Verified Purchase</div>
+        <p class="review-text">"The quiet operation is what surprised me most. My husband doesn't wake up when I blend early morning. The delivery was fast and the packaging was professional. Customer service responded immediately on WhatsApp. 10/10."</p>
+        <div class="review-date">February 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN + URGENCY -->
+<section style="padding: 0 0 40px;">
+  <div class="container">
+    <div id="urgency" class="reveal">
+      <div class="urgency-label">⚠️ Special Offer Ends In</div>
+      <div class="urgency-headline">Discount Price Closes When Timer Hits Zero</div>
+      <div class="countdown">
+        <div class="cd-block"><div class="cd-num" id="cd-hours">04</div><div class="cd-lbl">Hours</div></div>
+        <div class="cd-block"><div class="cd-num" id="cd-mins">47</div><div class="cd-lbl">Mins</div></div>
+        <div class="cd-block"><div class="cd-num" id="cd-secs">00</div><div class="cd-lbl">Secs</div></div>
+      </div>
+      <div class="urgency-note">Price returns to ₦95,000 once this timer expires.</div>
+      <div class="urgency-stock"><span class="stock-dot"></span> Only 17 units remaining at this price</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="center mb-40">
+      <p class="section-label">Today's Offer</p>
+      <h2 class="section-headline" style="max-width:100%;margin:0 auto;">Premium Blender. No-Nonsense Price.</h2>
+    </div>
+    <div class="pricing-card reveal">
+      <div class="pricing-header">
+        <div class="pricing-title">PowerBlend Pro 3-in-1 — Complete Package</div>
+        <div class="price-display">
+          <div class="price-new">₦200,000</div>
+          <div class="price-old">₦250,000</div>
+          <div class="price-save">Save ₦50,000</div>
+        </div>
+      </div>
+      <div class="pricing-body">
+        <div class="payment-badge">💚 Pay On Delivery — Zero Risk to You</div>
+        <ul class="included-list">
+          <li><span class="check">✓</span> PowerBlend Pro Base Unit with 1200W Motor</li>
+          <li><span class="check">✓</span> 2.0 Litre Main Blending Jar (BPA-Free)</li>
+          <li><span class="check">✓</span> 1.5 Litre Personal/Smoothie Jar (BPA-Free)</li>
+          <li><span class="check">✓</span> USB-C Charging Cable Included</li>
+          <li><span class="check">✓</span> Direct Power Adapter (100–240V)</li>
+          <li><span class="check">✓</span> Cleaning Brush Set</li>
+          <li><span class="check">✓</span> User Manual (English & Yoruba/Igbo/Hausa)</li>
+          <li><span class="check">✓</span> 12-Month Full Warranty Card</li>
+          <li><span class="check">✓</span> Free Nationwide Delivery</li>
+        </ul>
+        <a href="#order" class="btn-primary btn-lg" style="display:flex;justify-content:center;gap:8px;">🛒 Order Now — Pay On Delivery</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order">
+  <div class="container">
+    <div class="order-wrapper">
+      <div class="center mb-40">
+        <p class="section-label">Secure Your Order</p>
+        <h2 class="section-headline" style="max-width:100%;margin:0 auto 10px;">Fill In Your Details Below</h2>
+        <p style="font-size:0.9rem;color:var(--muted);">Our team will call to confirm your order before delivery.</p>
+      </div>
+      <div class="form-card">
+        <div id="form-content">
+          <h3 class="form-title">Order Form</h3>
+          <p class="form-sub">All fields are required. Pay only when it arrives.</p>
+
+          <form id="order-form" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="fullname">Full Name <span>*</span></label>
+              <input class="form-control" type="text" id="fullname" placeholder="e.g. Chioma Okonkwo" autocomplete="name">
+              <div class="error-msg" id="fullname-err">Please enter your full name.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone Number <span>*</span></label>
+              <input class="form-control" type="tel" id="phone" placeholder="e.g. 08012345678" autocomplete="tel" maxlength="14">
+              <div class="error-msg" id="phone-err">Please enter a valid Nigerian phone number.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="address">Delivery Address <span>*</span></label>
+              <input class="form-control" type="text" id="address" placeholder="House number, street, area, city" autocomplete="street-address">
+              <div class="error-msg" id="address-err">Please enter your delivery address.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="state">State <span>*</span></label>
+              <select class="form-control" id="state">
+                <option value="">— Select Your State —</option>
+                <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option>
+                <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option>
+                <option>Benue</option><option>Borno</option><option>Cross River</option>
+                <option>Delta</option><option>Ebonyi</option><option>Edo</option>
+                <option>Ekiti</option><option>Enugu</option><option>FCT (Abuja)</option>
+                <option>Gombe</option><option>Imo</option><option>Jigawa</option>
+                <option>Kaduna</option><option>Kano</option><option>Katsina</option>
+                <option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+                <option>Lagos</option><option>Nasarawa</option><option>Niger</option>
+                <option>Ogun</option><option>Ondo</option><option>Osun</option>
+                <option>Oyo</option><option>Plateau</option><option>Rivers</option>
+                <option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+                <option>Zamfara</option>
+              </select>
+              <div class="error-msg" id="state-err">Please select your state.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Quantity <span>*</span></label>
+              <div class="qty-selector">
+                <button type="button" class="qty-btn" id="qty-minus">−</button>
+                <input class="qty-display" type="number" id="quantity" value="1" min="1" max="10" readonly>
+                <button type="button" class="qty-btn" id="qty-plus">+</button>
+              </div>
+            </div>
+
+            <div class="order-total">
+              <div class="order-total-label">Total (Pay on Delivery)</div>
+              <div class="order-total-value" id="total-display">₦200,000</div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+              🛒 Complete Order — Pay On Delivery
+            </button>
+          </form>
+
+          <p class="form-footer-note">
+            By submitting, you agree to receive a confirmation call from our team.<br>
+            <strong style="color:var(--gold)">No payment is made online. You pay cash on delivery only.</strong>
+          </p>
+          <div class="trust-icons">
+            <div class="trust-item"><span class="icon">🔒</span> Secure Form</div>
+            <div class="trust-item"><span class="icon">📦</span> Free Delivery</div>
+            <div class="trust-item"><span class="icon">💵</span> Pay On Delivery</div>
+            <div class="trust-item"><span class="icon">🔄</span> 7-Day Return</div>
+          </div>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="success-overlay" id="success-msg">
+          <div class="success-icon">✅</div>
+          <h3 class="success-title">Order Received!</h3>
+          <p class="success-text">
+            Thank you! Your order has been placed successfully.<br><br>
+            Our team will call you within <strong style="color:var(--white)">30 minutes</strong> to confirm delivery details. Please keep your phone nearby.<br><br>
+            <strong style="color:var(--gold)">Remember: You pay only when the blender reaches you.</strong>
+          </p>
+          <div style="margin-top:24px;">
+            <a href="https://wa.link/ewbme0" target="_blank" class="btn-primary" style="display:inline-flex;">💬 Chat on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">PowerBlend<span>Pro</span></div>
+        <p>Nigeria's most trusted kitchen power solution. Built for our reality, by people who live in it.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Customer Care</h5>
+        <ul>
+          <li>📞 09114-POWERBLEND</li>
+          <li>💬 WhatsApp Support</li>
+          <li>Mon–Sat, 8am–8pm</li>
+          <li>Orders confirmed same day</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Guarantees</h5>
+        <ul>
+          <li>✓ Pay On Delivery Only</li>
+          <li>✓ Free Nationwide Delivery</li>
+          <li>✓ 7-Day Return Policy</li>
+          <li>✓ 12-Month Full Warranty</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div>© 2025 PowerBlend Pro. All rights reserved. Nigerian-owned brand.</div>
+      <div class="footer-trust-row">
+        <div class="footer-trust-item"><span>🔒</span> SSL Secured</div>
+        <div class="footer-trust-item"><span>🇳🇬</span> Made for Nigeria</div>
+        <div class="footer-trust-item"><span>💵</span> Pay on Delivery</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<div class="wa-float">
+  <div class="wa-bubble">Chat with us on WhatsApp</div>
+  <a class="wa-btn" href="https://wa.link/ewbme0" target="_blank" rel="noopener" title="Chat on WhatsApp">
+    <span class="wa-icon">💬</span>
+  </a>
+</div>
+
+<script>
+  // ── COUNTDOWN TIMER ──
+  (function() {
+    const stored = sessionStorage.getItem('pb_timer_end');
+    let endTime;
+    if (stored) {
+      endTime = parseInt(stored, 10);
+    } else {
+      endTime = Date.now() + (4 * 3600 + 47 * 60) * 1000;
+      sessionStorage.setItem('pb_timer_end', endTime);
+    }
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const diff = Math.max(0, endTime - Date.now());
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent = pad(m);
+      document.getElementById('cd-secs').textContent = pad(s);
+      if (diff > 0) requestAnimationFrame(tick);
+    }
+
+    tick();
+  })();
+
+  // ── QUANTITY SELECTOR ──
+  const qtyInput = document.getElementById('quantity');
+  const totalDisplay = document.getElementById('total-display');
+  const UNIT_PRICE = 200000;
+
+  function updateTotal() {
+    const qty = parseInt(qtyInput.value) || 1;
+    totalDisplay.textContent = '₦' + (qty * UNIT_PRICE).toLocaleString('en-NG');
+  }
+
+  document.getElementById('qty-minus').addEventListener('click', function() {
+    const v = parseInt(qtyInput.value);
+    if (v > 1) { qtyInput.value = v - 1; updateTotal(); }
+  });
+
+  document.getElementById('qty-plus').addEventListener('click', function() {
+    const v = parseInt(qtyInput.value);
+    if (v < 10) { qtyInput.value = v + 1; updateTotal(); }
+  });
+
+  // ── FORM VALIDATION ──
+  const form = document.getElementById('order-form');
+
+  function showError(id, show) {
+    const el = document.getElementById(id + '-err');
+    const field = document.getElementById(id);
+    if (!el || !field) return;
+    el.classList.toggle('visible', show);
+    field.classList.toggle('error', show);
+  }
+
+  function clearErrors() {
+    ['fullname','phone','address','state'].forEach(function(id) { showError(id, false); });
+  }
+
+  function validate() {
+    let valid = true;
+    clearErrors();
+
+    const name = document.getElementById('fullname').value.trim();
+    if (name.length < 3 || !/\s/.test(name)) { showError('fullname', true); valid = false; }
+
+    const phone = document.getElementById('phone').value.trim().replace(/\s+/g, '');
+    const phoneRx = /^(\+?234|0)[789][01]\d{8}$/;
+    if (!phoneRx.test(phone)) { showError('phone', true); valid = false; }
+
+    const address = document.getElementById('address').value.trim();
+    if (address.length < 10) { showError('address', true); valid = false; }
+
+    const state = document.getElementById('state').value;
+    if (!state) { showError('state', true); valid = false; }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = 'Processing...';
+    btn.disabled = true;
+
+    setTimeout(function() {
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+      document.getElementById('success-msg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 900);
+  });
+
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(function(el) { observer.observe(el); });
+
+  // ── SMOOTH SCROLL FOR ANCHOR LINKS ──
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── HIDE WHATSAPP BUBBLE AFTER 6S ──
+  setTimeout(function() {
+    const bubble = document.querySelector('.wa-bubble');
+    if (bubble) bubble.style.display = 'none';
+  }, 6000);
+</script>
+</body>
+</html>
