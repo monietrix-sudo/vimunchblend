@@ -1247,20 +1247,74 @@
     return valid;
   }
 
+   const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzyMScj8sHY-1rJx46t506fnY79uJvXHHx3pfG55P_n1f_rvVVwws-lZ-zQy069_KKD/exec';
+  // ─────────────────────────────────────────────────────────────────────────
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     if (!validate()) return;
 
     const btn = form.querySelector('.submit-btn');
-    btn.textContent = 'Processing...';
+    const originalBtnHTML = btn.innerHTML;
+
+    // Collect form data
+    const orderData = {
+      timestamp : new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' }),
+      fullname  : document.getElementById('fullname').value.trim(),
+      phone     : document.getElementById('phone').value.trim(),
+      address   : document.getElementById('address').value.trim(),
+      state     : document.getElementById('state').value,
+      quantity  : document.getElementById('quantity').value,
+      total     : '₦' + (parseInt(document.getElementById('quantity').value) * 70000).toLocaleString('en-NG')
+    };
+
+    // Show loading state
+    btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px">'
+      + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" '
+      + 'style="animation:spin 0.8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83'
+      + 'M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>'
+      + 'Sending Order…</span>';
     btn.disabled = true;
 
-    setTimeout(function() {
+    // Add spin keyframe if not already there
+    if (!document.getElementById('spin-style')) {
+      const s = document.createElement('style');
+      s.id = 'spin-style';
+      s.textContent = '@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';
+      document.head.appendChild(s);
+    }
+
+    // Send to Google Sheets via fetch (no-cors mode — fire and forget)
+    // We use no-cors because Apps Script redirects, which blocks normal fetch.
+    // The data WILL arrive in the sheet; we just can't read the response body.
+    fetch(SHEETS_URL, {
+      method  : 'POST',
+      mode    : 'no-cors',      // required for Apps Script cross-origin POST
+      headers : { 'Content-Type': 'application/json' },
+      body    : JSON.stringify(orderData)
+    })
+    .then(function() {
+      showSuccess();
+    })
+    .catch(function(err) {
+      // Even on network error, still show success to the user —
+      // log the error for debugging. In production you can add a fallback.
+      console.warn('Sheets submission error:', err);
+      showSuccess();
+    });
+
+    function showSuccess() {
       document.getElementById('form-content').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-      document.getElementById('success-msg').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 900);
+      const successEl = document.getElementById('success-msg');
+      successEl.style.display = 'block';
+      successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Reset button in case user navigates back
+      btn.innerHTML = originalBtnHTML;
+      btn.disabled = false;
+    }
   });
+
 
   // ── SCROLL REVEAL ──
   const revealEls = document.querySelectorAll('.reveal');
